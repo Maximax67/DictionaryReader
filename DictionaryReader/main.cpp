@@ -1,28 +1,47 @@
-#include <iostream>
+#include <sstream>
 
-#include "hashTable.h"
+#include "dictionaryReader.h"
+
+void capitalize(std::string& s);
 
 int main() {
-	DictionaryWord word1("test", "meaning for test");
-	DictionaryWord word2("test2", "meaning for test2");
-	DictionaryWord word3("test3", "meaning for test3");
-	DictionaryWord word4("test4", "meaning for test4");
+	HashTable<DictionaryWord, std::string> data;
+
+	std::string path;
+	std::cout << "Enter path: ";
+	std::getline(std::cin, path);
+
+	DictionaryReader::processFile(data, path);
+
+	std::string sentence, word;
+	do {
+		std::cout << "Enter sentence: ";
+		std::getline(std::cin, sentence);
 	
-	HashTable<DictionaryWord, std::string> table(3);
+		std::stringstream ss(sentence);
 
-	table.insert(word1, word1.getWord());
-	table.insert(word2, word2.getWord());
-	table.insert(word3, word3.getWord());
-	table.insert(word4, word4.getWord());
-
-	std::string find;
-
-	std::getline(std::cin, find);
-
-	DictionaryWord* found = table.getValue(find);
-
-	if (found != nullptr) std::cout << *found << std::endl;
-	else std::cout << "Not found" << std::endl;
+		while (ss >> word) {
+			capitalize(word);
+			DictionaryWord* dw = data.getValue(word);
+			if (dw != nullptr) {
+				std::cout << *dw << std::endl;
+			}
+			else {
+				std::cout << word << " not found!" << std::endl;
+			}
+		}
+	} while (true);
 
 	return 0;
+}
+
+void capitalize(std::string& s)
+{
+	for (int i = 0; i <= s.length(); i++)
+	{
+		if (isalpha(s[i]))
+		{
+			s[i] = toupper(s[i]);
+		}
+	}
 }
