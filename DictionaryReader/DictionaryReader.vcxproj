@@ -128,12 +128,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dictionaryWord.cpp" />
+    <ClCompile Include="hashTable.cpp" />
     <ClCompile Include="linkedList.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="node.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dictionaryWord.h" />
+    <ClInclude Include="hashTable.h" />
     <ClInclude Include="linkedList.h" />
+    <ClInclude Include="node.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

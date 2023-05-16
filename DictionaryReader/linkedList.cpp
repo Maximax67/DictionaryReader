@@ -3,25 +3,29 @@
 #include <string>
 
 template <class T, class Key>
-LinkedList<T, Key>::Node::Node(const T& value) : data(value), next(nullptr) {};
-
-template <class T, class Key>
 LinkedList<T, Key>::LinkedList() : head(nullptr), tail(nullptr) {};
 
 template <class T, class Key>
 LinkedList<T, Key>::~LinkedList() {
-    deleteList();
-}
+    Node<T>* current = head;
+    while (current != nullptr) {
+        Node<T>* temp = current;
+        current = current->getNext();
+        delete temp;
+    }
+    head = nullptr;
+    tail = nullptr;
+};
 
 template <class T, class Key>
 void LinkedList<T, Key>::insert(const T& value) {
-    Node* newNode = new Node(value);
+    Node<T>* newNode = new Node<T>(value);
     if (head == nullptr) {
         head = newNode;
         tail = newNode;
     }
     else {
-        tail->next = newNode;
+        tail->setNext(newNode);
         tail = newNode;
     }
 }
@@ -32,9 +36,9 @@ void LinkedList<T, Key>::remove(const Key& value) {
         return;
     }
 
-    if (head->data == value) {
-        Node* temp = head;
-        head = head->next;
+    if (head->getData() == value) {
+        Node<T>* temp = head;
+        head = head->getNext();
         if (head == nullptr) {
             tail = nullptr;
         }
@@ -42,43 +46,36 @@ void LinkedList<T, Key>::remove(const Key& value) {
         return;
     }
 
-    Node* current = head;
-    while (current->next != nullptr) {
-        if (current->next->data == value) {
-            Node* temp = current->next;
-            current->next = current->next->next;
-            if (current->next == nullptr) {
+    Node<T>* current = head;
+    while (current->getNext() != nullptr) {
+        if (current->getNext()->getData() == value) {
+            Node<T>* temp = current->getNext();
+            current->setNext(current->getNext()->getNext());
+            if (current->getNext() == nullptr) {
                 tail = current;
             }
             delete temp;
             return;
         }
-        current = current->next;
+        current = current->getNext();
     }
 }
 
 template <class T, class Key>
-void LinkedList<T, Key>::deleteList() {
-    Node* current = head;
+typename T* LinkedList<T, Key>::getValue(const Key& key) const {
+    Node<T>* current = head;
     while (current != nullptr) {
-        Node* temp = current;
-        current = current->next;
-        delete temp;
-    }
-    head = nullptr;
-    tail = nullptr;
-}
-
-template <class T, class Key>
-typename T* LinkedList<T, Key>::getNode(const Key& key) const {
-    Node* current = head;
-    while (current != nullptr) {
-        if (current->data == key) {
-            return &current->data;
+        if (current->getData() == key) {
+            return &current->getData();
         }
-        current = current->next;
+        current = current->getNext();
     }
     return nullptr;
+}
+
+template <class T, class Key>
+typename Node<T>* LinkedList<T, Key>::getHeadNode() const {
+    return head;
 }
 
 template class LinkedList<DictionaryWord, std::string>;

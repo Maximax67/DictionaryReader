@@ -1,26 +1,20 @@
 #pragma once
 
-#include "dictionaryWord.h"
+#include "node.h"
 
 template <class T, class Key = T>
 class LinkedList {
 private:
-	struct Node {
-		Node(const T&);
-		T data;
-		Node* next;
-	};
-
-	Node* head;
-	Node* tail;
+	Node<T>* head;
+	Node<T>* tail;
 	
-	void deleteList();
 public:
 	LinkedList();
 
 	void insert(const T&);
 	void remove(const Key&);
-	T* getNode(const Key&) const;
+	T* getValue(const Key&) const;
+	Node<T>* getHeadNode() const;
 
 	~LinkedList();
 };

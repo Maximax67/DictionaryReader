@@ -24,12 +24,24 @@
     <ClCompile Include="dictionaryWord.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="hashTable.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="node.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="linkedList.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="dictionaryWord.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="hashTable.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="node.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
