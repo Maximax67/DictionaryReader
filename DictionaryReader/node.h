@@ -2,15 +2,14 @@
 
 #include "dictionaryWord.h"
 
-template<typename T>
 class Node {
 private:
-	T data;
+	DictionaryWord data;
 	Node* next;
 public:
-	Node(const T&);
-	T& getData();
+	Node(const DictionaryWord&);
+	DictionaryWord& getData();
 	Node* getNext() const;
-	void setData(const T&);
+	void setData(const DictionaryWord&);
 	void setNext(Node*);
 };

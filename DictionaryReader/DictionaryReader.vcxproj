@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="askUser.cpp" />
     <ClCompile Include="dictionaryReader.cpp" />
     <ClCompile Include="dictionaryWord.cpp" />
     <ClCompile Include="hashTable.cpp" />
@@ -135,6 +136,7 @@
     <ClCompile Include="node.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="askUser.h" />
     <ClInclude Include="dictionaryReader.h" />
     <ClInclude Include="dictionaryWord.h" />
     <ClInclude Include="hashTable.h" />

@@ -1,27 +1,20 @@
 #include <sstream>
 
 #include "dictionaryReader.h"
-
-void capitalize(std::string& s);
+#include "askUser.h"
 
 int main() {
-	HashTable<DictionaryWord, std::string> data;
+	HashTable data;
 
-	std::string path;
-	std::cout << "Enter path: ";
-	std::getline(std::cin, path);
-
+	std::string path = getPath();
 	DictionaryReader::processFile(data, path);
 
-	std::string sentence, word;
 	do {
-		std::cout << "Enter sentence: ";
-		std::getline(std::cin, sentence);
+		std::string sentence = getSentence();
 	
 		std::stringstream ss(sentence);
-
+		std::string word;
 		while (ss >> word) {
-			capitalize(word);
 			DictionaryWord* dw = data.getValue(word);
 			if (dw != nullptr) {
 				std::cout << *dw << std::endl;
@@ -30,18 +23,7 @@ int main() {
 				std::cout << word << " not found!" << std::endl;
 			}
 		}
-	} while (true);
+	} while (askToContinue());
 
 	return 0;
-}
-
-void capitalize(std::string& s)
-{
-	for (int i = 0; i <= s.length(); i++)
-	{
-		if (isalpha(s[i]))
-		{
-			s[i] = toupper(s[i]);
-		}
-	}
 }

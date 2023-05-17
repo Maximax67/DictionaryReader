@@ -1,15 +1,10 @@
 #include "hashTable.h"
 
-template <class T, class Key>
-const int HashTable<T, Key>::defaultHashTableSize = 10;
+const int HashTable::defaultHashTableSize = 10;
 
+const float HashTable::resizeIndex = 0.8f;
 
-template <class T, class Key>
-const float HashTable<T, Key>::resizeIndex = 0.8f;
-
-
-template <class T, class Key>
-HashTable<T, Key>::HashTable(const int startSize) {
+HashTable::HashTable(const int startSize) {
 	if (startSize <= 0) {
 		throw std::invalid_argument("Start size can't be less or equal to 0");
 	}
@@ -20,19 +15,15 @@ HashTable<T, Key>::HashTable(const int startSize) {
 	
 	numBuckets = startSize;
 	numElements = 0;
-	buckets = new LinkedList<T, Key>[startSize];
+	buckets = new LinkedList[startSize];
 };
 
-
-template <class T, class Key>
-HashTable<T, Key>::~HashTable() {
+HashTable::~HashTable() {
 	delete[] buckets;
 };
 
-
-template <class T, class Key>
-void HashTable<T, Key>::insert(const T& value, const Key& key) {
-	std::size_t index = std::hash<Key>{}(key) % numBuckets;
+void HashTable::insert(const DictionaryWord& value) {
+	std::size_t index = std::hash<std::string>{}(value.getWord()) % numBuckets;
 	
 	buckets[index].insert(value);
 	numElements++;
@@ -42,23 +33,19 @@ void HashTable<T, Key>::insert(const T& value, const Key& key) {
 	}
 }
 
-
-template <class T, class Key>
-T* HashTable<T, Key>::getValue(const Key& key) const {
-	std::size_t index = std::hash<Key>{}(key) % numBuckets;
+DictionaryWord* HashTable::getValue(const std::string& key) const {
+	std::size_t index = std::hash<std::string>{}(key) % numBuckets;
 	return buckets[index].getValue(key);
 }
 
-
-template <class T, class Key>
-void HashTable<T, Key>::resizeTable() {
+void HashTable::resizeTable() {
 	std::size_t newSize = numBuckets * 2;
-	LinkedList<T, Key>* newBuckets = new LinkedList<T, Key>[newSize];
+	LinkedList* newBuckets = new LinkedList[newSize];
 
 	for (std::size_t i = 0; i < numBuckets; i++) {
-		Node<T>* cur = buckets[i].getHeadNode();
+		Node* cur = buckets[i].getHeadNode();
 		while (cur != nullptr) {
-			std::size_t newIndex = std::hash<Key>{}(cur->getData().getWord()) % newSize;
+			std::size_t newIndex = std::hash<std::string>{}(cur->getData().getWord()) % newSize;
 			newBuckets[newIndex].insert(cur->getData());
 			cur = cur->getNext();
 		}
@@ -69,5 +56,3 @@ void HashTable<T, Key>::resizeTable() {
 	buckets = newBuckets;
 	numBuckets = newSize;
 }
-
-template class HashTable<DictionaryWord, std::string>;

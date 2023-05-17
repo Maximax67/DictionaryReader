@@ -2,14 +2,12 @@
 
 #include <string>
 
-template <class T, class Key>
-LinkedList<T, Key>::LinkedList() : head(nullptr), tail(nullptr) {};
+LinkedList::LinkedList() : head(nullptr), tail(nullptr) {};
 
-template <class T, class Key>
-LinkedList<T, Key>::~LinkedList() {
-    Node<T>* current = head;
+LinkedList::~LinkedList() {
+    Node* current = head;
     while (current != nullptr) {
-        Node<T>* temp = current;
+        Node* temp = current;
         current = current->getNext();
         delete temp;
     }
@@ -17,9 +15,8 @@ LinkedList<T, Key>::~LinkedList() {
     tail = nullptr;
 };
 
-template <class T, class Key>
-void LinkedList<T, Key>::insert(const T& value) {
-    Node<T>* newNode = new Node<T>(value);
+void LinkedList::insert(const DictionaryWord& value) {
+    Node* newNode = new Node(value);
     if (head == nullptr) {
         head = newNode;
         tail = newNode;
@@ -30,14 +27,13 @@ void LinkedList<T, Key>::insert(const T& value) {
     }
 }
 
-template <class T, class Key>
-void LinkedList<T, Key>::remove(const Key& value) {
+void LinkedList::remove(const std::string& value) {
     if (head == nullptr) {
         return;
     }
 
     if (head->getData() == value) {
-        Node<T>* temp = head;
+        Node* temp = head;
         head = head->getNext();
         if (head == nullptr) {
             tail = nullptr;
@@ -46,10 +42,10 @@ void LinkedList<T, Key>::remove(const Key& value) {
         return;
     }
 
-    Node<T>* current = head;
+    Node* current = head;
     while (current->getNext() != nullptr) {
         if (current->getNext()->getData() == value) {
-            Node<T>* temp = current->getNext();
+            Node* temp = current->getNext();
             current->setNext(current->getNext()->getNext());
             if (current->getNext() == nullptr) {
                 tail = current;
@@ -61,9 +57,8 @@ void LinkedList<T, Key>::remove(const Key& value) {
     }
 }
 
-template <class T, class Key>
-typename T* LinkedList<T, Key>::getValue(const Key& key) const {
-    Node<T>* current = head;
+DictionaryWord* LinkedList::getValue(const std::string& key) const {
+    Node* current = head;
     while (current != nullptr) {
         if (current->getData() == key) {
             return &current->getData();
@@ -73,9 +68,6 @@ typename T* LinkedList<T, Key>::getValue(const Key& key) const {
     return nullptr;
 }
 
-template <class T, class Key>
-typename Node<T>* LinkedList<T, Key>::getHeadNode() const {
+Node* LinkedList::getHeadNode() const {
     return head;
 }
-
-template class LinkedList<DictionaryWord, std::string>;

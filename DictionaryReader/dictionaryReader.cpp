@@ -1,43 +1,59 @@
 #include "dictionaryReader.h"
 
-void DictionaryReader::processFile(HashTable<DictionaryWord, std::string>& data, const std::string& filename, const char sep) {
+void DictionaryReader::processFile(HashTable& data, const std::string& filename, const char sep) {
 	std::ifstream file(filename);
 
 	if (!file.is_open()) {
-		throw std::exception("Can't open file for reading");
+		printError("Can't open file for reading: " + filename);
+		return;
 	}
 
 	int line_counter = 1;
 	std::string line;
 
 	while (std::getline(file, line)) {
-		try {
-			DictionaryWord word = processLine(line, line_counter, sep);
-			data.insert(word, word.getWord());
-		}
-		catch (std::exception &e) {
-			std::cout << e.what() << std::endl;
-		}
+		processLine(data, line, line_counter, sep);
 		line_counter++;
+	}
+
+	if (line_counter == 1) {
+		printError("Can't read any line in dictionary!");
 	}
 
 	file.close();
 }
 
-DictionaryWord DictionaryReader::processLine(const std::string& line, const int nline, const char sep) {
+void DictionaryReader::processLine(HashTable& data, const std::string& line, const int line_counter, const char sep) {
+	if (line.length() == 0) {
+		printError("Empty line", line_counter);
+		return;
+	}
+
 	size_t pos = line.find_first_of(sep);
+	if (pos == std::string::npos || pos == 0 || pos == line.length() - 1) {
+		if (pos == std::string::npos) {
+			printError("Can't find separator for word and it's meaning!", line_counter, line);
+		} else if (line.length() == 1) {
+			printError("Only separator found, no word and it's meaning!", line_counter, line);
+		} else if (pos == 0) {
+			printError("No word, only meaning!", line_counter, line);
+		} else if (pos == line.length()) {
+			printError("No meaning, only word!", line_counter, line);
+		}
 
-	if (pos == std::string::npos) {
-		throw std::exception("Can't find separator for word and it's meaning");
+		return;
 	}
 
-	if (pos == 0) {
-		throw std::exception("No word, only meaning");
-	}
+	DictionaryWord word(line.substr(0, pos), line.substr(pos + 1));
+	data.insert(word);
+}
 
-	if (pos == line.length()) {
-		throw std::exception("No meaning, only word");
+void DictionaryReader::printError(const std::string& message, const int n_line, const std::string& line) {
+	if (n_line) {
+		std::cout << std::endl << "Error in dictionary! Line: " << n_line << std::endl
+			<< message << std::endl;
+		if (!line.empty()) {
+			std::cout << "Readed line: " << std::endl << line << std::endl;
+		}
 	}
-
-	return DictionaryWord(line.substr(0, pos), line.substr(pos + 1));
 }

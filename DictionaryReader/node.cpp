@@ -1,26 +1,19 @@
 #include "node.h"
 
-template <typename T>
-Node<T>::Node(const T& value) : data(value), next(nullptr) {};
+Node::Node(const DictionaryWord& value) : data(value), next(nullptr) {};
 
-template <typename T>
-void Node<T>::setData(const T& d) {
+void Node::setData(const DictionaryWord& d) {
 	data = d;
 }
 
-template <typename T>
-void Node<T>::setNext(Node<T>* n) {
+void Node::setNext(Node* n) {
 	next = n;
 }
 
-template <typename T>
-T& Node<T>::getData() {
+DictionaryWord& Node::getData() {
 	return data;
 };
 
-template <typename T>
-Node<T>* Node<T>::getNext() const {
+Node* Node::getNext() const {
 	return next;
 };
-
-template class Node<DictionaryWord>;
