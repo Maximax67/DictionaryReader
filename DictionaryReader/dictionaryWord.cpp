@@ -1,4 +1,4 @@
-#include "dictionaryWord.h"
+﻿#include "dictionaryWord.h"
 
 DictionaryWord::DictionaryWord(const std::string& w, const std::string& m) {
 	if (w.empty() || m.empty()) {
@@ -32,6 +32,9 @@ bool DictionaryWord::operator==(const std::string& compared_word) const {
 }
 
 std::ostream& operator<<(std::ostream& os, const DictionaryWord w) {
-	os << w.getWord() << ": " << w.getMeaning() << std::endl;
+	os << '\t' << w.getWord() << std::endl
+		<< "------------------------------------------------------------" << std::endl
+		<< w.getMeaning() << std::endl
+		<< "============================================================" << std::endl;
 	return os;
 }

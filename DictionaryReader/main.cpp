@@ -1,6 +1,5 @@
-#include <sstream>
-
 #include "dictionaryReader.h"
+#include "sentenceProcessing.h"
 #include "askUser.h"
 
 int main() {
@@ -11,18 +10,7 @@ int main() {
 
 	do {
 		std::string sentence = getSentence();
-	
-		std::stringstream ss(sentence);
-		std::string word;
-		while (ss >> word) {
-			DictionaryWord* dw = data.getValue(word);
-			if (dw != nullptr) {
-				std::cout << *dw << std::endl;
-			}
-			else {
-				std::cout << word << " not found!" << std::endl;
-			}
-		}
+		sentenceProcessing::processSentence(data, sentence);
 	} while (askToContinue());
 
 	return 0;

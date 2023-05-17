@@ -11,6 +11,6 @@ public:
 	DictionaryWord(const std::string&, const std::string&);
 	std::string getWord() const;
 	std::string getMeaning() const;
-	bool operator==(const std::string& compared_word) const;
+	bool operator==(const std::string&) const;
 	friend std::ostream& operator<<(std::ostream&, const DictionaryWord);
 };

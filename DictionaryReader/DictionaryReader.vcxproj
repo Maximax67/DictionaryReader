@@ -134,6 +134,7 @@
     <ClCompile Include="linkedList.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="node.cpp" />
+    <ClCompile Include="sentenceProcessing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="askUser.h" />
@@ -142,6 +143,7 @@
     <ClInclude Include="hashTable.h" />
     <ClInclude Include="linkedList.h" />
     <ClInclude Include="node.h" />
+    <ClInclude Include="sentenceProcessing.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

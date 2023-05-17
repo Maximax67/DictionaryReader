@@ -1,6 +1,6 @@
 #include "hashTable.h"
 
-const int HashTable::defaultHashTableSize = 10;
+const int HashTable::defaultHashTableSize = 100;
 
 const float HashTable::resizeIndex = 0.8f;
 
@@ -23,7 +23,7 @@ HashTable::~HashTable() {
 };
 
 void HashTable::insert(const DictionaryWord& value) {
-	std::size_t index = std::hash<std::string>{}(value.getWord()) % numBuckets;
+	unsigned long index = hashFunction(value.getWord()) % numBuckets;
 	
 	buckets[index].insert(value);
 	numElements++;
@@ -34,18 +34,18 @@ void HashTable::insert(const DictionaryWord& value) {
 }
 
 DictionaryWord* HashTable::getValue(const std::string& key) const {
-	std::size_t index = std::hash<std::string>{}(key) % numBuckets;
+	unsigned long index = hashFunction(key) % numBuckets;
 	return buckets[index].getValue(key);
 }
 
 void HashTable::resizeTable() {
-	std::size_t newSize = numBuckets * 2;
+	unsigned long newSize = numBuckets * 2;
 	LinkedList* newBuckets = new LinkedList[newSize];
 
-	for (std::size_t i = 0; i < numBuckets; i++) {
+	for (unsigned long i = 0; i < numBuckets; i++) {
 		Node* cur = buckets[i].getHeadNode();
 		while (cur != nullptr) {
-			std::size_t newIndex = std::hash<std::string>{}(cur->getData().getWord()) % newSize;
+			unsigned long newIndex = hashFunction(cur->getData().getWord()) % newSize;
 			newBuckets[newIndex].insert(cur->getData());
 			cur = cur->getNext();
 		}
@@ -55,4 +55,15 @@ void HashTable::resizeTable() {
 
 	buckets = newBuckets;
 	numBuckets = newSize;
+}
+
+// djb2 хеш функція
+unsigned long HashTable::hashFunction(const std::string& str) const {
+	unsigned long hash = 5381;
+	int c, i = 0;
+
+	while (c = str[i++])
+		hash = ((hash << 5) + hash) + c; // hash * 33 + c
+
+	return hash;
 }

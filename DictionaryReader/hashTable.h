@@ -10,9 +10,10 @@ private:
 	static const float resizeIndex;
 
 	LinkedList* buckets;
-	std::size_t numBuckets;
-	std::size_t numElements;
+	unsigned long numBuckets;
+	unsigned long numElements;
 
+	unsigned long hashFunction(const std::string&) const;
 	void resizeTable();
 public:
 	HashTable(const int = defaultHashTableSize);
