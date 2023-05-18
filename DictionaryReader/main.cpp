@@ -1,8 +1,14 @@
+#include <windows.h>
+
 #include "dictionaryReader.h"
 #include "sentenceProcessing.h"
 #include "askUser.h"
 
 int main() {
+	SetConsoleOutputCP(1251);
+	SetConsoleCP(1251);
+	std::setlocale(LC_ALL, "Ukr");
+
 	HashTable data;
 
 	std::string path = getPath();

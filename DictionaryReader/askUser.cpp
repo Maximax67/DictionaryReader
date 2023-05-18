@@ -45,21 +45,12 @@ std::string getPath() {
 			return path;
 		}
 
-		std::cout << "ERROR! Invalid path!" << std::endl << "Enter again: ";
-	}
-}
-
-void capitalize(std::string& s) {
-	for (int i = 0; i < s.length(); i++) {
-		if (isalpha(s[i])) {
-			s[i] = toupper(s[i]);
-		}
+		std::cout << "ERROR! Invalid path!" << std::endl;
 	}
 }
 
 std::string getSentence() {
 	std::cout << "Enter sentence: ";
 	std::string input = inputString();
-	capitalize(input);
 	return input;
 }
