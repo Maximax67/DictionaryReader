@@ -38,7 +38,7 @@ bool validatePath(const std::string& path) {
 
 std::string getPath() {
 	while (true) {
-		std::cout << "Enter path to directory: ";
+		std::cout << "Enter path to dictionary file: ";
 		std::string path = inputString();
 
 		if (validatePath(path)) {

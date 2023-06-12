@@ -1,6 +1,6 @@
 #include "hashTable.h"
 
-const int HashTable::defaultHashTableSize = 100;
+const int HashTable::defaultHashTableSize = 1000;
 
 const float HashTable::resizeIndex = 0.8f;
 
@@ -57,7 +57,7 @@ void HashTable::resizeTable() {
 	numBuckets = newSize;
 }
 
-// djb2 хеш функція
+// djb2
 unsigned long HashTable::hashFunction(const std::string& str) const {
 	unsigned long hash = 5381;
 	int c, i = 0;
